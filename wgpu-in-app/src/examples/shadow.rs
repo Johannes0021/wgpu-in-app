@@ -368,7 +368,7 @@ impl Shadow {
             address_mode_w: wgpu::AddressMode::ClampToEdge,
             mag_filter: wgpu::FilterMode::Linear,
             min_filter: wgpu::FilterMode::Linear,
-            mipmap_filter: wgpu::FilterMode::Nearest,
+            mipmap_filter: wgpu::MipmapFilterMode::Nearest,
             compare: Some(wgpu::CompareFunction::LessEqual),
             ..Default::default()
         });
@@ -474,7 +474,7 @@ impl Shadow {
             let pipeline_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
                 label: Some("shadow"),
                 bind_group_layouts: &[&bind_group_layout, &local_bind_group_layout],
-                push_constant_ranges: &[],
+                immediate_size: 0,
             });
 
             let uniform_buf = device.create_buffer(&wgpu::BufferDescriptor {
@@ -526,7 +526,7 @@ impl Shadow {
                     },
                 }),
                 multisample: wgpu::MultisampleState::default(),
-                multiview: None,
+                multiview_mask: None,
                 cache: None,
             });
 
@@ -586,7 +586,7 @@ impl Shadow {
             let pipeline_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
                 label: Some("main"),
                 bind_group_layouts: &[&bind_group_layout, &local_bind_group_layout],
-                push_constant_ranges: &[],
+                immediate_size: 0,
             });
 
             let mx_total = Self::generate_matrix(config.width as f32 / config.height as f32);
@@ -653,7 +653,7 @@ impl Shadow {
                     bias: wgpu::DepthBiasState::default(),
                 }),
                 multisample: wgpu::MultisampleState::default(),
-                multiview: None,
+                multiview_mask: None,
                 cache: None,
             });
 

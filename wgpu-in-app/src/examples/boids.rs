@@ -105,7 +105,7 @@ impl Boids {
             device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
                 label: Some("compute"),
                 bind_group_layouts: &[&compute_bind_group_layout],
-                push_constant_ranges: &[],
+                immediate_size: 0,
             });
 
         // create render pipeline with empty bind group layout
@@ -113,7 +113,7 @@ impl Boids {
             device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
                 label: Some("render"),
                 bind_group_layouts: &[],
-                push_constant_ranges: &[],
+                immediate_size: 0,
             });
         let render_pipeline = device.create_render_pipeline(&wgpu::RenderPipelineDescriptor {
             label: None,
@@ -144,7 +144,7 @@ impl Boids {
             primitive: wgpu::PrimitiveState::default(),
             depth_stencil: None,
             multisample: wgpu::MultisampleState::default(),
-            multiview: None,
+            multiview_mask: None,
             cache: None,
         });
 

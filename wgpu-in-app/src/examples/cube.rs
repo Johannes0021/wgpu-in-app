@@ -143,7 +143,7 @@ impl Cube {
         let pipeline_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
             label: None,
             bind_group_layouts: &[&bind_group_layout],
-            push_constant_ranges: &[],
+            immediate_size: 0,
         });
 
         // Create the texture
@@ -242,7 +242,7 @@ impl Cube {
             },
             depth_stencil: None,
             multisample: wgpu::MultisampleState::default(),
-            multiview: None,
+            multiview_mask: None,
             cache: None,
         });
 
@@ -284,7 +284,7 @@ impl Cube {
                 },
                 depth_stencil: None,
                 multisample: wgpu::MultisampleState::default(),
-                multiview: None,
+                multiview_mask: None,
                 cache: None,
             });
             Some(pipeline_wire)
@@ -327,7 +327,6 @@ impl Example for Cube {
     fn enter_frame(&mut self, app_surface: &AppSurface) {
         let device = &app_surface.device;
         let queue = &app_surface.queue;
-        device.push_error_scope(wgpu::ErrorFilter::Validation);
         let (frame, view) = app_surface.get_current_frame_view(None);
         let mut encoder =
             device.create_command_encoder(&wgpu::CommandEncoderDescriptor { label: None });

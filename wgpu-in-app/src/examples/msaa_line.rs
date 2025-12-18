@@ -74,7 +74,7 @@ impl MSAALine {
         let pipeline_layout = device.create_pipeline_layout(&wgpu::PipelineLayoutDescriptor {
             label: None,
             bind_group_layouts: &[],
-            push_constant_ranges: &[],
+            immediate_size: 0,
         });
 
         let multisampled_framebuffer =
@@ -177,7 +177,7 @@ impl MSAALine {
                 count: sample_count,
                 ..Default::default()
             },
-            multiview: None,
+            multiview_mask: None,
             cache: None,
         });
         let mut encoder =
